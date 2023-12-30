@@ -1,8 +1,6 @@
 from tortoise import fields
 from tortoise.models import Model
 
-from datetime import datetime
-
 
 class User(Model):
     id = fields.BigIntField(pk=True)
