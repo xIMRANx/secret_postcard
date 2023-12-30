@@ -42,7 +42,7 @@ async def get_postcard(message: Message, bot: Bot, config: Config):
     text = f'''
     <b>Новая открытка</b> от <a href="tg://user?id={user_id}">{user_id}</a>
     
-    Описание: {str(caption)}
+Описание: {str(caption)}
     '''
 
     match postcard_type:
