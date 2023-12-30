@@ -21,7 +21,7 @@ class Card(Model):
         max_length=255, default="photo"
     )  # photo or video or animation
 
-    description = fields.CharField(max_length=512, null=True)
+    description = fields.CharField(max_length=2048, null=True)
     owner_id = fields.BigIntField()
 
     approved = fields.BooleanField(default=False)
