@@ -3,6 +3,7 @@ import time
 from aiogram import Router, Bot
 from aiogram.filters import Command
 from aiogram.types import Message
+from aiogram.types import BufferedInputFile
 
 from app.filters.is_owner import IsOwner
 from app.config import Config
@@ -36,8 +37,8 @@ async def send_postcard_handler(message: Message, bot: Bot, config: Config):
         user = await User.is_registered(user)
 
         while card.owner_id == user.telegram_id or (
-            user.telegram_id in departures
-            and departures[user.telegram_id] == card.owner_id
+            card.owner_id in departures
+            and departures[card.owner_id] == user.telegram_id
         ):
             card = choice(cards)
 
@@ -75,10 +76,14 @@ async def send_postcard_handler(message: Message, bot: Bot, config: Config):
                     user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
                 )
 
+    """
     departures_str = json.dumps(departures)
-    virtual_file = io.StringIO(departures_str)
+    virtual_file = BufferedInputFile(
+        io.BytesIO(departures_str.encode(encoding="utf-8")), filename="departures.json"
+    )
 
     await message.answer_document(
         message.chat.id, virtual_file, caption="Список отправлений"
     )
+    """
     await message.answer("Рассылка открыток завершена!")

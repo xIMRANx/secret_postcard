@@ -18,6 +18,9 @@ class User(models.User):
     @classmethod
     async def is_admin(cls, telegram_id: int) -> bool:
         user = await cls.is_registered(telegram_id)
+        if not user:
+            return False
+
         if user.role == "admin":
             return True
         else:
