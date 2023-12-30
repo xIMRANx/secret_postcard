@@ -20,3 +20,17 @@ class User(models.User):
     @classmethod
     async def get_count(cls) -> int:
         return await cls.all().count()
+
+
+class Card(models.Card):
+    @classmethod
+    async def get_count(cls) -> int:
+        return await cls.all().count()
+
+    @classmethod
+    async def create_card(cls, file_id: str, description: str, owner_id: int) -> None:
+        await Card(file_id=file_id, description=description, owner_id=owner_id).save()
+
+    @classmethod
+    async def approve(cls, user_id: int) -> None:
+        await cls.filter(owner_id=user_id).update(approved=True)
