@@ -1,5 +1,4 @@
 from aiogram import Router, Bot, F
-from aiogram.filters import CommandStart
 from aiogram.types import Message
 
 from app.db.functions import User

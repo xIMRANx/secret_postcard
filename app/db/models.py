@@ -5,18 +5,18 @@ from datetime import datetime
 
 
 class User(Model):
-    id = fields.BigIntField(pk=True, generated=True)
+    id = fields.BigIntField(pk=True)
     telegram_id = fields.BigIntField()
     name = fields.CharField(max_length=255)
     anonymous = fields.BooleanField(default=False)
 
     role = fields.CharField(max_length=255, default="user")
 
-    create_date = fields.CharField(max_length=255, default=datetime.now())
+    create_date = fields.CharField(max_length=255, default="0")
 
 
 class Card(Model):
-    id = fields.BigIntField(pk=True, generated=True)
+    id = fields.BigIntField(pk=True)
 
     file_id = fields.CharField(max_length=255)
     file_type = fields.CharField(
@@ -28,4 +28,4 @@ class Card(Model):
 
     approved = fields.BooleanField(default=False)
 
-    create_date = fields.CharField(max_length=255, default=datetime.now())
+    create_date = fields.CharField(max_length=255, default="0")
