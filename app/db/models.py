@@ -1,6 +1,8 @@
 from tortoise import fields
 from tortoise.models import Model
 
+from datetime import datetime
+
 
 class User(Model):
     id = fields.BigIntField(pk=True, generated=True)
@@ -10,7 +12,7 @@ class User(Model):
 
     role = fields.CharField(max_length=255, default="user")
 
-    create_date = fields.CharField(max_length=255)
+    create_date = fields.CharField(max_length=255, default=datetime.now())
 
 
 class Card(Model):
@@ -26,4 +28,4 @@ class Card(Model):
 
     approved = fields.BooleanField(default=False)
 
-    create_date = fields.CharField(max_length=255)
+    create_date = fields.CharField(max_length=255, default=datetime.now())
