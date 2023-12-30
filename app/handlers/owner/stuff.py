@@ -1,11 +1,10 @@
 import time
 
-from aiogram import Router, Bot
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 
 from app.filters.is_owner import IsOwner
-from app.config import Config
 from app.db.functions import User, Card
 from random import choice
 
@@ -24,7 +23,9 @@ async def ping_handler(message: Message):
 
 
 @router.message(IsOwner(is_owner=True), Command(commands=["send_postcard"]))
-async def send_postcard_handler(message: Message, bot: Bot, config: Config):
+async def send_postcard_handler(message: Message):
+    await message.answer("Рассылка открыток начата!")
+
     cards = await Card.get_all_cards()
     users = await Card.get_all_card_owners()
 
@@ -51,11 +52,6 @@ async def send_postcard_handler(message: Message, bot: Bot, config: Config):
         )
         card_description = (
             f"<blockquote>{card.description}</blockquote>" if card.description else ""
-        )
-
-        await bot.send_message(
-            config.settings.chat_id,
-            f"Пользователь {user.telegram_id} получил открытку от {card_author_name}!",
         )
 
         caption = f"✨ Вам открытка от {card_author_name}!\n\n{card_description}"
