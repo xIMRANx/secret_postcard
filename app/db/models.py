@@ -6,7 +6,7 @@ class User(Model):
     id = fields.BigIntField(pk=True, generated=True)
     telegram_id = fields.BigIntField()
     name = fields.CharField(max_length=255)
-    secret_name = fields.CharField(max_length=255, null=True)
+    anonymous = fields.BooleanField(default=False)
 
     role = fields.CharField(max_length=255, default="user")
 
