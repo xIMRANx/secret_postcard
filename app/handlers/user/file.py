@@ -64,6 +64,6 @@ async def get_postcard(message: Message, bot: Bot, config: Config):
     )
 
     await message.answer(
-        'Открытка отправлена на проверку.'
+        'Открытка отправлена на проверку.\n'
         'После проверки вы получите уведомление.'
     )
