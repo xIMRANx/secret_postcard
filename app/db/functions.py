@@ -28,8 +28,15 @@ class Card(models.Card):
         return await cls.all().count()
 
     @classmethod
-    async def create_card(cls, file_id: str, description: str, owner_id: int) -> None:
-        await Card(file_id=file_id, description=description, owner_id=owner_id).save()
+    async def create_card(
+        cls, file_id: str, description: str, owner_id: int, file_type: str = "photo"
+    ) -> None:
+        await Card(
+            file_id=file_id,
+            description=description,
+            owner_id=owner_id,
+            file_type=file_type,
+        ).save()
 
     @classmethod
     async def approve(cls, user_id: int) -> None:

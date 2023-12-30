@@ -13,7 +13,12 @@ class User(Model):
 
 class Card(Model):
     id = fields.BigIntField(pk=True, generated=True)
+
     file_id = fields.CharField(max_length=255)
+    file_type = fields.CharField(
+        max_length=255, default="photo"
+    )  # photo or video or animation
+
     description = fields.CharField(max_length=255, null=True)
     owner_id = fields.BigIntField()
 
