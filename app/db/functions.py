@@ -23,7 +23,7 @@ class User(models.User):
 
     @classmethod
     async def edit_anonymous(cls, user_id: int, anonymous: bool) -> None:
-        await cls.filter(id=user_id).update(anonymous=anonymous)
+        await cls.filter(telegram_id=user_id).update(anonymous=anonymous)
 
 
 class Card(models.Card):

@@ -13,6 +13,7 @@ from app import db, version
 from app.arguments import parse_arguments
 from app.config import Config, parse_config
 from app.db import close_orm, init_orm
+from app.dialogs import get_dialog_router
 from app.handlers import get_handlers_router
 from app.middlewares import register_middlewares
 from app.commands import remove_bot_commands, setup_bot_commands
@@ -25,6 +26,7 @@ from datetime import datetime
 async def on_startup(dispatcher: Dispatcher, bot: Bot, config: Config):
     register_middlewares(dp=dispatcher, config=config)
 
+    dispatcher.include_router(get_dialog_router())
     dispatcher.include_router(get_handlers_router())
 
     await setup_bot_commands(bot, config)
