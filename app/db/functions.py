@@ -37,8 +37,16 @@ class User(models.User):
     async def edit_anonymous(cls, user_id: int, anonymous: bool) -> None:
         await cls.filter(telegram_id=user_id).update(anonymous=anonymous)
 
+    @classmethod
+    async def get_all_users(cls) -> list[models.User]:
+        return await cls.all()
+
 
 class Card(models.Card):
+    @classmethod
+    async def get_all_card_owners(cls) -> list[models.Card]:
+        return await cls.all().values_list("owner_id", flat=True)
+
     @classmethod
     async def get_count(cls) -> int:
         return await cls.all().count()
@@ -73,3 +81,7 @@ class Card(models.Card):
     @classmethod
     async def delete_card(cls, user_id: int) -> None:
         await cls.filter(owner_id=user_id).delete()
+
+    @classmethod
+    async def get_all_cards(cls) -> list[models.Card]:
+        return await cls.filter(approved=True).all()
