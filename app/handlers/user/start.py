@@ -16,9 +16,9 @@ router = Router()
 
 
 @router.message(CommandStart())
-async def cmd_start(message: Message, bot: Bot):
+async def cmd_start(message: Message, bot: Bot, config: Config):
     user_id = message.from_user.id
-    chat_id = Config.settings.chat_id
+    chat_id = config.settings.chat_id
 
     await message.answer(choice(["❄️", "🎅"]))
     name = fake.name()

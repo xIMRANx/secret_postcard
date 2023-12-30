@@ -10,6 +10,7 @@ use_persistent_storage = false # (Optional)
 
 [settings]
 owner_id = 123
+chat_id = -123
 throttling_rate = 0.5
 drop_pending_updates = false
 
