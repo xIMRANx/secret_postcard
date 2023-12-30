@@ -12,6 +12,12 @@ router = Router()
 
 @router.message(F.content_type.in_({'photo', 'video', 'animation'}))
 async def get_postcard(message: Message, bot: Bot, config: Config):
+    if await Card.check_exists(message.from_user.id):
+        await message.answer(
+            'Вы уже отправили свою открытку!'
+        )
+        return
+
     postcard_type = message.content_type
     if message.photo is not None:
         file_id = message.photo[-1].file_id
@@ -56,6 +62,7 @@ async def get_postcard(message: Message, bot: Bot, config: Config):
         owner_id=user_id,
         file_type=postcard_type,
     )
+
     await message.answer(
         'Открытка отправлена на проверку.'
         'После проверки вы получите уведомление.'

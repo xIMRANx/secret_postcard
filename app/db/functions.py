@@ -43,6 +43,10 @@ class Card(models.Card):
         ).save()
 
     @classmethod
+    async def check_exists(cls, user_id: int) -> bool:
+        return await cls.filter(owner_id=user_id).exists()
+
+    @classmethod
     async def approve(cls, user_id: int) -> None:
         await cls.filter(owner_id=user_id).update(approved=True)
 
