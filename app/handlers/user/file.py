@@ -35,7 +35,7 @@ async def get_postcard(message: Message, bot: Bot, config: Config):
             "Попробуйте перезапустить бота командой /start"
         )
 
-    caption = message.caption
+    caption = message.caption.replace("<", "&lt;").replace(">", "&gt;")
     text = f'<b>Новая открытка</b> от <a href="tg://user?id={user_id}">{user_id}</a>\n\nОписание: {str(caption)}'
 
     match postcard_type:
