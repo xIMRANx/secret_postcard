@@ -7,10 +7,7 @@ from app.keyboards.inline import get_instruction_keyboard
 from app.config import Config
 
 from random import choice
-from faker import Faker
 
-
-fake = Faker("ru_RU")
 
 router = Router()
 
@@ -21,7 +18,6 @@ async def cmd_start(message: Message, bot: Bot, config: Config):
     chat_id = config.settings.chat_id
 
     await message.answer(choice(["❄️", "🎅"]))
-    name = fake.name()
 
     text = (
         "<b>Привет, если ты тут, значит хочешь участвовать в обмене открытками!</b>\n\n"
@@ -30,7 +26,7 @@ async def cmd_start(message: Message, bot: Bot, config: Config):
     )
 
     if not await User.is_registered(user_id):
-        await User.register(user_id, name)
+        await User.register(user_id, message.from_user.full_name)
 
         await bot.send_message(chat_id, f"Новый пользователь! {user_id}")
 

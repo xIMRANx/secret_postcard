@@ -21,6 +21,10 @@ class User(models.User):
     async def get_count(cls) -> int:
         return await cls.all().count()
 
+    @classmethod
+    async def edit_anonymous(cls, user_id: int, anonymous: bool) -> None:
+        await cls.filter(id=user_id).update(anonymous=anonymous)
+
 
 class Card(models.Card):
     @classmethod
@@ -41,3 +45,14 @@ class Card(models.Card):
     @classmethod
     async def approve(cls, user_id: int) -> None:
         await cls.filter(owner_id=user_id).update(approved=True)
+
+    @classmethod
+    async def get_card(cls, user_id: int) -> Union[models.Card, bool]:
+        try:
+            return await cls.get(owner_id=user_id, approved=False)
+        except DoesNotExist:
+            return False
+
+    @classmethod
+    async def delete_card(cls, user_id: int) -> None:
+        await cls.filter(owner_id=user_id).delete()
