@@ -1,6 +1,6 @@
 aerich
 aiogram
-aiogram-dialogs==2.0.0
+aiogram-dialog==2.0.0
 aiohttp
 aiosqlite
 aioschedule
