@@ -14,8 +14,8 @@ class User(models.User):
             return False
 
     @classmethod
-    async def register(cls, telegram_id):
-        await User(telegram_id=telegram_id).save()
+    async def register(cls, telegram_id: int, name: str = None) -> None:
+        await User(telegram_id=telegram_id, name=name).save()
 
     @classmethod
     async def get_count(cls) -> int:

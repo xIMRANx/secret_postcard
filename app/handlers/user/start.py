@@ -13,7 +13,7 @@ async def cmd_start(message: Message, bot: Bot):
     bot_information = await bot.get_me()
 
     if not await User.is_registered(user_id):
-        await User.register(user_id)
+        await User.register(user_id, message.from_user.full_name)
     await message.answer(
         f"Приветствую тебя в <b>{bot_information.full_name}</b>! \n"
         f"<b>ℹ️ Для получения информации о командах и их использовании напиши</b> /help"
