@@ -4,6 +4,8 @@ from tortoise.exceptions import DoesNotExist
 
 from app.db import models
 
+from datetime import datetime
+
 
 class User(models.User):
     @classmethod
@@ -23,7 +25,9 @@ class User(models.User):
 
     @classmethod
     async def register(cls, telegram_id: int, name: str = None) -> None:
-        await User(telegram_id=telegram_id, name=name).save()
+        await User(
+            telegram_id=telegram_id, name=name, create_date=datetime.now()
+        ).save()
 
     @classmethod
     async def get_count(cls) -> int:
@@ -48,6 +52,7 @@ class Card(models.Card):
             description=description,
             owner_id=owner_id,
             file_type=file_type,
+            create_date=datetime.now(),
         ).save()
 
     @classmethod

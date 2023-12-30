@@ -10,6 +10,8 @@ class User(Model):
 
     role = fields.CharField(max_length=255, default="user")
 
+    create_date = fields.CharField(max_length=255)
+
 
 class Card(Model):
     id = fields.BigIntField(pk=True, generated=True)
@@ -23,3 +25,5 @@ class Card(Model):
     owner_id = fields.BigIntField()
 
     approved = fields.BooleanField(default=False)
+
+    create_date = fields.CharField(max_length=255)
