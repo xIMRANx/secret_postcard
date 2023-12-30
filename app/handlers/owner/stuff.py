@@ -34,46 +34,51 @@ async def send_postcard_handler(message: Message, bot: Bot, config: Config):
     for user in users:
         card = choice(cards)
         user = await User.is_registered(user)
-        while card.owner_id == user.telegram_id or \
-                (user.telegram_id in departures and departures[user.telegram_id] == card.owner_id):
+
+        while card.owner_id == user.telegram_id or (
+            user.telegram_id in departures
+            and departures[user.telegram_id] == card.owner_id
+        ):
             card = choice(cards)
+
         departures[user.telegram_id] = card.owner_id
         cards.remove(card)
+
         card_author = await User.is_registered(card.owner_id)
-        card_author_name = 'Анонима' if card_author.anonymous else \
-            f'<a href="tg://user?id={card.owner_id}">{card_author.name}</a>'
-        card_description = f'<blockquote>{card.description}</blockquote>' if card.description else ''
+        card_author_name = (
+            "Анонима"
+            if card_author.anonymous
+            else f'<a href="tg://user?id={card.owner_id}">{card_author.name}</a>'
+        )
+        card_description = (
+            f"<blockquote>{card.description}</blockquote>" if card.description else ""
+        )
 
-        await bot.send_message(config.settings.chat_id,
-                               f'Пользователь {user.telegram_id} получил открытку от {card_author_name}!')
+        await bot.send_message(
+            config.settings.chat_id,
+            f"Пользователь {user.telegram_id} получил открытку от {card_author_name}!",
+        )
 
-        caption = f'''
-        ✨ Вам открытка от {card_author_name}!
-
-{card_description}
-        '''
+        caption = f"✨ Вам открытка от {card_author_name}!\n\n{card_description}"
 
         match card.file_type:
-            case 'photo':
-                await message.bot.send_photo(user.telegram_id,
-                                             card.file_id,
-                                             caption=caption,
-                                             parse_mode='HTML')
-            case 'video':
-                await message.bot.send_video(user.telegram_id,
-                                             card.file_id,
-                                             caption=caption,
-                                             parse_mode='HTML')
-            case 'animation':
-                await message.bot.send_animation(user.telegram_id,
-                                                 card.file_id,
-                                                 caption=caption,
-                                                 parse_mode='HTML')
+            case "photo":
+                await message.bot.send_photo(
+                    user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
+                )
+            case "video":
+                await message.bot.send_video(
+                    user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
+                )
+            case "animation":
+                await message.bot.send_animation(
+                    user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
+                )
 
     departures_str = json.dumps(departures)
     virtual_file = io.StringIO(departures_str)
-    await message.answer_document(message.chat.id, virtual_file, caption='Список отправлений')
-    await message.answer(
-        'Рассылка открыток завершена!'
-    )
 
+    await message.answer_document(
+        message.chat.id, virtual_file, caption="Список отправлений"
+    )
+    await message.answer("Рассылка открыток завершена!")
