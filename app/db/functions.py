@@ -14,6 +14,14 @@ class User(models.User):
             return False
 
     @classmethod
+    async def is_admin(cls, telegram_id: int) -> bool:
+        user = await cls.is_registered(telegram_id)
+        if user.role == "admin":
+            return True
+        else:
+            return False
+
+    @classmethod
     async def register(cls, telegram_id: int, name: str = None) -> None:
         await User(telegram_id=telegram_id, name=name).save()
 
