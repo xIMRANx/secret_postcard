@@ -41,6 +41,7 @@ class ConfigDatabase:
 @dataclass
 class ConfigSettings:
     owner_id: int
+    chat_id: int
     throttling_rate: float = 0.5
     drop_pending_updates: bool = True
 

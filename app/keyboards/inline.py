@@ -8,3 +8,9 @@ def get_author_keyboard(owner_id):
     ]
     keyboard = InlineKeyboardBuilder(markup=buttons)
     return keyboard.as_markup()
+
+
+def get_instruction_keyboard():
+    buttons = [[InlineKeyboardButton(text="Инструкция", url=f"https://google.com")]]
+    keyboard = InlineKeyboardBuilder(markup=buttons)
+    return keyboard.as_markup()

@@ -10,3 +10,4 @@ toml
 tortoise-orm
 gitpython
 asyncpg
+Faker

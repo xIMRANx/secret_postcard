@@ -15,4 +15,6 @@ class Card(Model):
     id = fields.BigIntField(pk=True, generated=True)
     file_id = fields.CharField(max_length=255)
     description = fields.CharField(max_length=255, null=True)
-    owner = fields.ForeignKeyField('models.User', related_name='cards', null=True)
+    owner = fields.ForeignKeyField("models.User", related_name="cards", null=True)
+
+    approved = fields.BooleanField(default=False)
