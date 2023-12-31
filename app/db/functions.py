@@ -48,7 +48,7 @@ class User(models.User):
 class Card(models.Card):
     @classmethod
     async def get_all_card_owners(cls) -> list[models.Card]:
-        return await cls.all().values_list("owner_id", flat=True)
+        return await cls.filter(approved=True).values_list("owner_id", flat=True)
 
     @classmethod
     async def get_count(cls) -> int:
