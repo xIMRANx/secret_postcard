@@ -36,6 +36,8 @@ async def cmd_start(
     if not await User.is_registered(user_id):
         await User.register(user_id, message.from_user.full_name)
 
-        await bot.send_message(chat_id, f"Новый пользователь! {user_id}")
+        await bot.send_message(chat_id, f"Новый пользователь! \n "
+                                        f"<a href='tg://user?id={user_id}'>{message.from_user.full_name}</a>",
+                               parse_mode="HTML")
 
         await dialog_manager.start(AnonDialog.choice)
