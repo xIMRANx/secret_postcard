@@ -36,7 +36,7 @@ async def get_postcard(message: Message, bot: Bot, config: Config):
         )
 
     caption = message.caption.replace("<", "&lt;").replace(">", "&gt;")
-    text = f'<b>Новая открытка</b> от <a href="tg://user?id={user_id}">{user_id}</a>\n\nОписание: {str(caption)}'
+    text = f'<b>Новая открытка</b> от <a href="tg://user?id={user_id}">{message.from_user.first_name} {message.from_user.last_name}</a>\n\nОписание: {str(caption)}'
 
     match postcard_type:
         case "photo":
