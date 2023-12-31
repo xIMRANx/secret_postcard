@@ -82,4 +82,4 @@ async def send_postcard_handler(message: Message):
                 except:
                     pass
 
-    await message.answer("Рассылка открыток завершена!")
+    await message.answer(f"Рассылка открыток завершена!\n {count} пользователей получили ")
