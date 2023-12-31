@@ -30,14 +30,14 @@ async def send_postcard_handler(message: Message):
     users = await Card.get_all_card_owners()
 
     departures = {}
-
+    count = 0
     for user in users:
         card = choice(cards)
         user = await User.is_registered(user)
 
         while card.owner_id == user.telegram_id or (
-            card.owner_id in departures
-            and departures[card.owner_id] == user.telegram_id
+                card.owner_id in departures
+                and departures[card.owner_id] == user.telegram_id
         ):
             card = choice(cards)
 
@@ -62,6 +62,7 @@ async def send_postcard_handler(message: Message):
                     await message.bot.send_photo(
                         user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
                     )
+                    count = count + 1
                 except:
                     pass
             case "video":
@@ -69,6 +70,7 @@ async def send_postcard_handler(message: Message):
                     await message.bot.send_video(
                         user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
                     )
+                    count = count + 1
                 except:
                     pass
             case "animation":
@@ -76,6 +78,7 @@ async def send_postcard_handler(message: Message):
                     await message.bot.send_animation(
                         user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
                     )
+                    count = count + 1
                 except:
                     pass
 
