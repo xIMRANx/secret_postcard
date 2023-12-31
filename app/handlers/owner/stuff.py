@@ -58,16 +58,25 @@ async def send_postcard_handler(message: Message):
 
         match card.file_type:
             case "photo":
-                await message.bot.send_photo(
-                    user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
-                )
+                try:
+                    await message.bot.send_photo(
+                        user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
+                    )
+                except:
+                    pass
             case "video":
-                await message.bot.send_video(
-                    user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
-                )
+                try:
+                    await message.bot.send_video(
+                        user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
+                    )
+                except:
+                    pass
             case "animation":
-                await message.bot.send_animation(
-                    user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
-                )
+                try:
+                    await message.bot.send_animation(
+                        user.telegram_id, card.file_id, caption=caption, parse_mode="HTML"
+                    )
+                except:
+                    pass
 
     await message.answer("Рассылка открыток завершена!")
