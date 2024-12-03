@@ -20,11 +20,13 @@ async def approve_handler(query: CallbackQuery, bot: Bot):
         await Card.approve(user_id)
         await bot.send_message(user_id, "Ваша открытка одобрена!")
         await query.message.edit_caption(
-            caption=query.message.caption + "\n\n<b>✅ Одобрено</b>"
+            caption=query.message.caption + "\n\n<b>✅ Одобрено</b>",
+            parse_mode="HTML",
         )
     elif action == "decline":
-        await bot.send_message(user_id, "Ваша открытка отклонена!\nНо вы можете попробовать еще раз!")
         await Card.delete_card(user_id)
+        await bot.send_message(user_id, "Ваша открытка отклонена!\nНо вы можете попробовать еще раз!")
         await query.message.edit_caption(
-            caption=query.message.caption + "\n\n<b>❌ Отклонено </b>"
+            caption=query.message.caption + "\n\n<b>❌ Отклонено </b>",
+            parse_mode="HTML",
         )

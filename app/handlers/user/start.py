@@ -35,9 +35,17 @@ async def cmd_start(
 
     if not await User.is_registered(user_id):
         await User.register(user_id, message.from_user.full_name)
+        args = message.text.split()
 
-        await bot.send_message(chat_id, f"Новый пользователь! \n "
-                                        f"<a href='tg://user?id={user_id}'>{message.from_user.full_name}</a>",
-                               parse_mode="HTML")
+        await bot.send_message(
+            chat_id,
+            (
+                f"Новый пользователь #{user_id}!\n "
+                f"<a href='tg://user?id={user_id}'>{message.from_user.full_name} "
+                f"{'@' + message.from_user.username if message.from_user.username else ''}</a>\n"
+                f"Подпись: #{args[1] if len(args) > 1 else 'unknown'}"
+            ),
+            parse_mode="HTML",
+        )
 
         await dialog_manager.start(AnonDialog.choice)

@@ -1,15 +1,17 @@
 from aiogram import Router, Bot, F
 from aiogram.types import Message
 
-from app.db.functions import User
-from app.db.functions import Card
+from app.db.functions import User, Card
+from app.filters.is_registered import IsRegistered
 from app.keyboards.inline import get_approve_keyboard
 from app.config import Config
 
 router = Router()
 
-
-@router.message(F.content_type.in_({"photo", "video", "animation"}))
+@router.message(
+    F.content_type.in_({"photo", "video", "animation"}), 
+    IsRegistered(is_registered=True)
+)
 async def get_postcard(message: Message, bot: Bot, config: Config):
     if await Card.check_exists(message.from_user.id):
         await message.answer("Вы уже отправили свою открытку!")
@@ -36,8 +38,10 @@ async def get_postcard(message: Message, bot: Bot, config: Config):
         )
 
     caption = message.caption.replace("<", "&lt;").replace(">", "&gt;")
-    text = (f'<b>Новая открытка</b> от <a href="tg://user?id={user_id}">{message.from_user.full_name}</a>\n\n'
-            f'Описание: {str(caption)}')
+    text = (
+        f'<b>Новая открытка</b> от <a href="tg://user?id={user_id}">{message.from_user.full_name}</a>\n\n'
+        f'Описание: {str(caption)}'
+    )
 
     match postcard_type:
         case "photo":
@@ -73,5 +77,5 @@ async def get_postcard(message: Message, bot: Bot, config: Config):
     )
 
     await message.answer(
-        "Открытка отправлена на проверку.\n" "После проверки вы получите уведомление."
+        "Открытка отправлена на проверку.\nПосле проверки вы получите уведомление."
     )
