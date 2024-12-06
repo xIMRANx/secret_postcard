@@ -15,7 +15,7 @@ def get_instruction_keyboard():
         [
             InlineKeyboardButton(
                 text="Инструкция",
-                url="https://telegra.ph/Instrukciya-k-botu-Tajnyj-Santa-12-30",
+                url="https://telegra.ph/Instrukciya-k-botu-Tajnyj-Santa-12-05",
             )
         ]
     ]
